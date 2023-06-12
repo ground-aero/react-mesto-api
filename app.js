@@ -20,6 +20,7 @@ const { PORT = 3000 } = process.env;
 // console.log(process.env);
 const app = express();
 
+// const routes = require('./routes');
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 const {
@@ -55,9 +56,10 @@ app.use(limiter); // Apply the rate limiting middleware to all requests
 app.use(morgan('dev'));
 
 /** 3 Routes which handling requests */
+// app.use(routes);
 // обработчики POST-запросов на роуты: '/signin' и '/signup'
-app.post('/signin', loginValidator, login);
 app.post('/signup', createUserValidator, createUser);
+app.post('/signin', loginValidator, login);
 
 /** все роуты, кроме /signin и /signup, защищены авторизацией */
 app.use('/users', auth, usersRouter); // запросы в корень будем матчить с путями которые прописали в руте юзеров
