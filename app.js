@@ -11,6 +11,7 @@ const {
   ERR_CODE_404,
 } = require('./errors/errors-codes');
 const NotFoundErr = require('./errors/not-found-err');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 /** 1 */
 // берем адрес БД из process.env
 // const { PORT = 3000, DB_ADDRESS = 'mongodb://0.0.0.0:27017/mestodb' } = process.env;

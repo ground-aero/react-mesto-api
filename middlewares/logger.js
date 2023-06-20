@@ -11,3 +11,18 @@ const requestLogger = expressWinston.logger({
   ],
   format: winston.format.json(),
 });
+
+// Создадим логгер ошибок ( имя ошибки, сообщение и её стектрейс).
+const errorLogger = expressWinston.errorLogger({
+  transports: [
+    new winston.transports.File({ filename: 'error.log' }),
+  ],
+  format: winston.format.json(),
+});
+
+module.exports = {
+  requestLogger,
+  errorLogger,
+};
+
+// А затем импортировать в app.js
