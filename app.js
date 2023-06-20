@@ -56,21 +56,21 @@ const limiter = rateLimit({
 app.use(limiter); // Apply the rate limiting middleware to all requests
 app.use(morgan('dev'));
 
+app.use(requestLogger); // подключаем логгер запросов, до всех обработчиков роутов
+
 /** 3 Routes which handling requests */
 // app.use(routes);
 // обработчики POST-запросов на роуты: '/signin' и '/signup'
 app.post('/signup', createUserValidator, createUser);
 app.post('/signin', loginValidator, login);
-
 /** все роуты, кроме /signin и /signup, защищены авторизацией */
 app.use('/users', auth, usersRouter); // запросы в корень будем матчить с путями которые прописали в руте юзеров
 app.use('/cards', auth, cardsRouter);
 
-/** Любые маршруты не подходящие под созданные роуты, вызовут 404 статус */
-app.use((req, res, next) => {
-  next(new NotFoundErr(ERR_CODE_404));
-});
+/** errorLogger нужно подключить после обработчиков роутов и до обработчиков ошибок: */
+app.use(errorLogger); // подключаем логгер ошибок
 app.use(errors()); // обработчик ошибок celebrate
+/** централизованный обработчик ошибок */
 app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({
@@ -81,6 +81,10 @@ app.use((error, req, res, next) => {
   next();
 });
 app.use(errorsHandler);
+/** Любые маршруты не подходящие под созданные роуты, вызовут 404 статус */
+app.use((req, res, next) => {
+  next(new NotFoundErr(ERR_CODE_404));
+});
 
 /** 4 */
 app.listen(PORT, () => {
