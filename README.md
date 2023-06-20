@@ -1,12 +1,15 @@
 [![Tests](../../actions/workflows/tests-13-sprint.yml/badge.svg)](../../actions/workflows/tests-13-sprint.yml) [![Tests](../../actions/workflows/tests-14-sprint.yml/badge.svg)](../../actions/workflows/tests-14-sprint.yml)
 # Настройка и деплой бэкенда
 
-
-
+--- PW 15
 ### Реализовано логирование запросов и ошибок
-- Каждый запрос к API должен сохраняться в файле request.log. Если API возвращает ошибку, информация о ней должна сохраняться в файле error.log.
-
-
+- Каждый запрос к API должен сохраняться в файле request.log. Если API возвращает ошибку, информация о ней должна сохраняться в файле error.log. 
+   * install winston и express-winston
+   * Всю работу будем вести в файле middlewares/logger.js:
+// middlewares/logger.js
+// импортируем нужные модули
+const winston = require('winston');
+const expressWinston = require('express-winston');
 
 #### IP-адрес:
 
